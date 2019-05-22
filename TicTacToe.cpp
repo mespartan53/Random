@@ -12,7 +12,7 @@ class TTTBoard{
     void selection(int player, int choice)
     {
         string update = "";
-        if (player == 0)
+        if (player % 2 == 0)
             update = "X";
         else
             update = "O";
@@ -132,7 +132,7 @@ class TTTBoard{
     }
 };
 
-int pregame(TTTBoard * g)
+int pregame()
 {
     int start = 0;
     
@@ -148,34 +148,64 @@ int pregame(TTTBoard * g)
             << "4: Exit\n";
         cin >> start;
     }
+    system("Clear");
     return start;
 }
 
 int endGame(TTTBoard * g)
 {
-    
+    return 5;
 }
 
-int playGame(TTTBoard * g, int player)
+int playGame(TTTBoard * g, int *player)
 {
     int choice = 10;
-    cout << g;
+    bool valid = false;
+    
+    cout << *g;
+    cout <<"Player " << (*player % 2) + 1 << " please make a move.\n"
+        <<"Only 1-9 are valid choices (Cannot choose a space that has been selected).\n";
+    cin >> choice;
+    
+    if (choice <= 9 && choice >= 1)
+        valid = g->isValid(choice);
+    else 
+        valid = false;
+    
+    while(choice > 9 || choice < 1 || !valid)
+    {
+        cout << *g;
+        cout << "Choice NOT valid\n"
+            <<"Player " << (*player % 2) + 1 << " please make a move.\n"
+            <<"Only 1-9 are valid choices (Cannot choose a space that has been selected).\n";
+        cin >> choice;
+        if (choice <= 9 && choice >= 1)
+            valid = g->isValid(choice);
+        else
+            valid = false;
+    }
+    
+    g->selection(*player, choice);
+    (*player)++;
+    return g->checkVictory();
 }
 
 int main() {
     TTTBoard *game = new TTTBoard;
     int state = 5; // 0: Player 1 win, 1: Player 2 win, 2: draw, 3: play on, 4 exit, 5: begin game;
-    int player = 0;
+    int *player = new int(0);
     
     while (state != 4)
     {
         if (state == 0)
         {
+            cout << *game;
             cout << "Player 1 Wins!!!\n";
             state = endGame(game);
         }
         if (state == 1)
         {
+            cout << *game;
             cout << "Player 2 Wins!!!\n";
             state = endGame(game);
         }
@@ -191,10 +221,6 @@ int main() {
         if (state == 5)
         {
             game->resetBoard();
-            state = pregame(game);
+            state = pregame();
         }
     }
-    
-    cout << "Good Game(s)\n";
-    return 0;   
-}
