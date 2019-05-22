@@ -30,7 +30,7 @@ class TTTBoard{
     int checkVictory()
     {
         //check 123
-        if(currentBoard[0] == currentBoard[1] && currentBoard[1] == currentBoard[2] && currentBoard[0] != "X" && currentBoard[0] != "O") {
+        if(currentBoard[0] == currentBoard[1] && currentBoard[1] == currentBoard[2] && (currentBoard[0] == "X" || currentBoard[0] == "O")) {
             if (currentBoard[0] == "X")
                 return 0;
             else
@@ -38,7 +38,7 @@ class TTTBoard{
         }
                 
         //check 159
-        if(currentBoard[0] == currentBoard[4] && currentBoard[4] == currentBoard[8] && currentBoard[0] != "X" && currentBoard[0] != "O") {
+        if(currentBoard[0] == currentBoard[4] && currentBoard[4] == currentBoard[8] && (currentBoard[0] == "X" || currentBoard[0] == "O")) {
             if (currentBoard[0] == "X")
                 return 0;
             else
@@ -46,7 +46,7 @@ class TTTBoard{
         }
         
         //check 147
-        if(currentBoard[0] == currentBoard[3] && currentBoard[3] == currentBoard[6] && currentBoard[0] != "X" && currentBoard[0] != "O") {
+        if(currentBoard[0] == currentBoard[3] && currentBoard[3] == currentBoard[6] && (currentBoard[0] == "X" || currentBoard[0] == "O")) {
             if (currentBoard[0] == "X")
                 return 0;
             else
@@ -54,7 +54,7 @@ class TTTBoard{
         }
                 
         //check 258
-        if(currentBoard[1] == currentBoard[4] && currentBoard[4] == currentBoard[7] && currentBoard[4] != "X" && currentBoard[4] != "O") {
+        if(currentBoard[1] == currentBoard[4] && currentBoard[4] == currentBoard[7] && (currentBoard[4] == "X" || currentBoard[4] == "O")) {
             if (currentBoard[4] == "X")
                 return 0;
             else
@@ -62,7 +62,7 @@ class TTTBoard{
         }
                 
         //check 456
-        if(currentBoard[3] == currentBoard[4] && currentBoard[4] == currentBoard[5] && currentBoard[4] != "X" && currentBoard[4] != "O") {
+        if(currentBoard[3] == currentBoard[4] && currentBoard[4] == currentBoard[5] && (currentBoard[4] == "X" || currentBoard[4] == "O")) {
             if (currentBoard[4] == "X")
                 return 0;
             else
@@ -70,7 +70,7 @@ class TTTBoard{
         }
                 
         //check 357
-        if(currentBoard[2] == currentBoard[4] && currentBoard[4] == currentBoard[6] && currentBoard[4] != "X" && currentBoard[4] != "O") {
+        if(currentBoard[2] == currentBoard[4] && currentBoard[4] == currentBoard[6] && (currentBoard[4] == "X" || currentBoard[4] == "O")) {
             if (currentBoard[4] == "X")
                 return 0;
             else
@@ -78,7 +78,7 @@ class TTTBoard{
         }
                 
         //check 369
-        if(currentBoard[2] == currentBoard[5] && currentBoard[5] == currentBoard[8] && currentBoard[8] != "X" && currentBoard[8] != "O") {
+        if(currentBoard[2] == currentBoard[5] && currentBoard[5] == currentBoard[8] && (currentBoard[8] == "X" || currentBoard[8] == "O")) {
             if (currentBoard[8] == "X")
                 return 0;
             else
@@ -86,7 +86,7 @@ class TTTBoard{
         }
 
         //check 789
-        if(currentBoard[6] == currentBoard[7] && currentBoard[7] == currentBoard[8] && currentBoard[8] != "X" && currentBoard[8] != "O") {
+        if(currentBoard[6] == currentBoard[7] && currentBoard[7] == currentBoard[8] && (currentBoard[8] == "X" || currentBoard[8] == "O")) {
             if (currentBoard[8] == "X")
                 return 0;
             else
@@ -135,13 +135,12 @@ class TTTBoard{
 int pregame(TTTBoard * g)
 {
     int start = 0;
-    g->resetBoard();
     
     cout << "Make a selection followed by enter(3 or 4 only)\n"
         << "3: Start Tic-Tac-Toe\n"
         << "4: Exit\n";
     cin >> start;
-    while (start != 4 || start != 3)
+    while (start > 4 || start < 3)
     {
         cout << "Please choose a valid option\n"
             << "Make a selection followed by enter(3 or 4 only)\n"
@@ -191,6 +190,7 @@ int main() {
         }
         if (state == 5)
         {
+            game->resetBoard();
             state = pregame(game);
         }
     }
