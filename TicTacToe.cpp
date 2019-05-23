@@ -9,6 +9,7 @@ class TTTBoard{
     
     public:
     
+    //Depending on the player will determine the letter used
     void selection(int player, int choice)
     {
         string update = "";
@@ -20,6 +21,7 @@ class TTTBoard{
         currentBoard[choice - 1] = update;
     }
     
+    //Checks if the choice is not played
     bool isValid(int choice)
     {
         if (currentBoard[choice - 1] == "X" || currentBoard[choice - 1] == "O")
@@ -27,9 +29,12 @@ class TTTBoard{
         return true;
     }
     
+    //checks all victory situations
+    //then checks if there are still playable selections
+    //if none, the draw
     int checkVictory()
     {
-        //check 123
+        //check 123 -- top row
         if(currentBoard[0] == currentBoard[1] && currentBoard[1] == currentBoard[2] && (currentBoard[0] == "X" || currentBoard[0] == "O")) {
             if (currentBoard[0] == "X")
                 return 0;
@@ -37,7 +42,7 @@ class TTTBoard{
                 return 1;
         }
                 
-        //check 159
+        //check 159 -- down sloping diagonal
         if(currentBoard[0] == currentBoard[4] && currentBoard[4] == currentBoard[8] && (currentBoard[0] == "X" || currentBoard[0] == "O")) {
             if (currentBoard[0] == "X")
                 return 0;
@@ -45,7 +50,7 @@ class TTTBoard{
                 return 1;
         }
         
-        //check 147
+        //check 147 -- left column
         if(currentBoard[0] == currentBoard[3] && currentBoard[3] == currentBoard[6] && (currentBoard[0] == "X" || currentBoard[0] == "O")) {
             if (currentBoard[0] == "X")
                 return 0;
@@ -53,7 +58,7 @@ class TTTBoard{
                 return 1;
         }
                 
-        //check 258
+        //check 258 -- middle column
         if(currentBoard[1] == currentBoard[4] && currentBoard[4] == currentBoard[7] && (currentBoard[4] == "X" || currentBoard[4] == "O")) {
             if (currentBoard[4] == "X")
                 return 0;
@@ -61,7 +66,7 @@ class TTTBoard{
                 return 1;
         }
                 
-        //check 456
+        //check 456 -- middle row
         if(currentBoard[3] == currentBoard[4] && currentBoard[4] == currentBoard[5] && (currentBoard[4] == "X" || currentBoard[4] == "O")) {
             if (currentBoard[4] == "X")
                 return 0;
@@ -69,7 +74,7 @@ class TTTBoard{
                 return 1;
         }
                 
-        //check 357
+        //check 357 -- up sloping diagonal
         if(currentBoard[2] == currentBoard[4] && currentBoard[4] == currentBoard[6] && (currentBoard[4] == "X" || currentBoard[4] == "O")) {
             if (currentBoard[4] == "X")
                 return 0;
@@ -77,7 +82,7 @@ class TTTBoard{
                 return 1;
         }
                 
-        //check 369
+        //check 369 -- right column
         if(currentBoard[2] == currentBoard[5] && currentBoard[5] == currentBoard[8] && (currentBoard[8] == "X" || currentBoard[8] == "O")) {
             if (currentBoard[8] == "X")
                 return 0;
@@ -85,7 +90,7 @@ class TTTBoard{
                 return 1;
         }
 
-        //check 789
+        //check 789 -- bottom row
         if(currentBoard[6] == currentBoard[7] && currentBoard[7] == currentBoard[8] && (currentBoard[8] == "X" || currentBoard[8] == "O")) {
             if (currentBoard[8] == "X")
                 return 0;
@@ -104,18 +109,22 @@ class TTTBoard{
         return 2;
     }
     
+    
+    //reset the board to numbered selections
     void resetBoard()
     {
         for (int i = 0; i < 9; i++)
             currentBoard[i] = to_string(i + 1);
     }
     
+    //Initialize the board
     TTTBoard()
     {
            for (int i = 0; i < 9; i++)
                 currentBoard[i] = to_string(i + 1);
     }
     
+    //output board tabbed from the left
     friend ostream & operator<<(ostream & out, TTTBoard & game)
     {
         for (int i = 0; i < 5; i++)
@@ -133,6 +142,7 @@ class TTTBoard{
     }
 };
 
+//Handle everything before starting a new game
 int pregame()
 {
     int start = 0;
@@ -141,7 +151,7 @@ int pregame()
         << "3: Start Tic-Tac-Toe\n"
         << "4: Exit\n";
     cin >> start;
-    while (start > 4 || start < 3)
+    while (start > 4 || start < 3) //input validation
     {
         cout << "Please choose a valid option\n"
             << "Make a selection followed by enter(3 or 4 only)\n"
@@ -153,12 +163,15 @@ int pregame()
     return start;
 }
 
+//reset the baord and prepare for next game
 int endGame(TTTBoard * g)
 {
     g->resetBoard();
     return 5;
 }
 
+//the player makes a choice based and validate
+//the selection is made and the player is incremented and victory is checked
 int playGame(TTTBoard * g, int *player)
 {
     int choice = 10;
