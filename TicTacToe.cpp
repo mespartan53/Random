@@ -96,7 +96,7 @@ class TTTBoard{
         //check for unused spaces
         //3 will be to continue playing 
         for (int i = 0; i < 9; i++)
-            if (currentBoard[i] != "X" || currentBoard[i] != "O")
+            if (currentBoard[i] != "X" && currentBoard[i] != "O")
                 return 3;
         
         //no victory, no winner
@@ -106,7 +106,8 @@ class TTTBoard{
     
     void resetBoard()
     {
-        TTTBoard();   
+        for (int i = 0; i < 9; i++)
+            currentBoard[i] = to_string(i + 1);
     }
     
     TTTBoard()
@@ -119,14 +120,14 @@ class TTTBoard{
     {
         for (int i = 0; i < 5; i++)
             if (i % 2 != 0)
-                out << "----------" << endl;
+                out << "\t----------" << endl;
             else
                 if (i == 0)
-                    out<< game.currentBoard[0] << " | " << game.currentBoard[1] << " | " << game.currentBoard[2] << endl;
+                    out<< "\t" << game.currentBoard[0] << " | " << game.currentBoard[1] << " | " << game.currentBoard[2] << endl;
                 else if ( i == 2 )
-                    out<< game.currentBoard[3] << " | " << game.currentBoard[4] << " | " << game.currentBoard[5] << endl;
+                    out<< "\t" << game.currentBoard[3] << " | " << game.currentBoard[4] << " | " << game.currentBoard[5] << endl;
                 else
-                    out<< game.currentBoard[6] << " | " << game.currentBoard[7] << " | " << game.currentBoard[8] << endl;
+                    out<< "\t" << game.currentBoard[6] << " | " << game.currentBoard[7] << " | " << game.currentBoard[8] << endl;
         
         return out;
     }
@@ -154,6 +155,7 @@ int pregame()
 
 int endGame(TTTBoard * g)
 {
+    g->resetBoard();
     return 5;
 }
 
@@ -194,6 +196,7 @@ int main() {
     TTTBoard *game = new TTTBoard;
     int state = 5; // 0: Player 1 win, 1: Player 2 win, 2: draw, 3: play on, 4 exit, 5: begin game;
     int *player = new int(0);
+    int p1Wins = 0, p2Wins = 0, draws = 0;
     
     while (state != 4)
     {
@@ -201,26 +204,40 @@ int main() {
         {
             cout << *game;
             cout << "Player 1 Wins!!!\n";
+            cout << "Total Wins\n"
+                << "Player 1: " << ++p1Wins << endl
+                << "Player 2: " << p2Wins << endl
+                << "Draws   : " << draws << endl;
             state = endGame(game);
         }
         if (state == 1)
         {
             cout << *game;
             cout << "Player 2 Wins!!!\n";
+            cout << "Total Wins\n"
+                << "Player 1: " << p1Wins << endl
+                << "Player 2: " << ++p2Wins << endl
+                << "Draws   : " << draws << endl;
             state = endGame(game);
         }
         if (state == 2)
         {
             cout << "It's a draw!!!\n";
+            cout << "Total Wins\n"
+                << "Player 1: " << p1Wins << endl
+                << "Player 2: " << p2Wins << endl
+                << "Draws   : " << ++draws << endl;
             state = endGame(game);
         }
         if (state == 3)
         {
-            state = playGame(game, player);   
+            state = playGame(game, player);
         }
         if (state == 5)
         {
-            game->resetBoard();
             state = pregame();
         }
     }
+    
+    return 0;
+}
