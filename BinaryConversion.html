@@ -1,0 +1,91 @@
+<!DOCTYPE>
+<html>
+<head>
+	
+		<style type="text/css">
+            
+			.square {
+  text-align: center;
+  display: inline-block;
+  border: 2.5px outset aqua;
+  box-shadow:  -10px 10px 1px  1px gray;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 60px;
+  background-color: gray;
+  text-shadow: -2px 2px 2px  white;
+}
+
+.inner {
+  border: 3.5px inset aqua;
+  padding: 30px;
+  padding-top: 5px;
+  border-radius: 60px;
+  background-color: black;
+  color: aqua;
+}
+
+.main{
+  background-color: rgba(202, 201, 190, 100);
+  width: 50%;
+  height: 100%;
+}
+
+body{
+  background-color: teal;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.btnConv {
+  margin-top: 10px;
+}
+			
+        </style>
+		
+	</head>
+	<body>
+	  <div class ="square main">  
+          <div class ="square"> 
+              <div class="inner">
+              <h1>1's complement</h1>
+              <form>
+				      <input type="text" id="ones"></input><br></br>
+              <button type="button" class="btnConv" onclick="convertOne()">Convert!</button>
+              </form>
+              </div>
+          </div>
+
+          <div class ="square">
+              <div class="inner">
+              <h1>2's complement</h1>
+              <form>
+              <input type="text" id="twos"></input><br></br>
+              <button type="button" class="btnConv" onclick="convertTwo()">Convert!</button>
+              </form>
+              </div>
+          </div>
+
+          <div class ="square">
+              <div class="inner">
+              <h1>Decimal Equivalent</h1>
+              <form>
+              <input type="text" id="decimal"></input><br></br>
+              <button type="button" class="btnConv" onclick="convertDec()">Convert!</button>
+              </form>
+              </div>
+          </div>
+
+          <div class ="square">
+              <div class="inner">
+              <h1>Results</h1>
+              <h3 id="onesResult">1's: </h3>
+              <h3 id="twosResult">2's: </h3>
+              <h3 id="decResult">Decimal: </h3>
+              </div>
+          </div>
+      </div>
+      
+      <script>
+  </body>
+</html>
